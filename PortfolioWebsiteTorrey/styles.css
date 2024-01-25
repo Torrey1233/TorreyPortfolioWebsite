@@ -1,0 +1,374 @@
+/* Hello! This is my CSS styling file for my portfolio */
+/* Keyframe animation for typing effect */
+@keyframes typeWriterAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'FuturaPT', sans-serif;
+  font-smooth: always;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-image: url('header_background_photo2.jpg');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1.name {
+  font-family: 'FuturaPT', sans-serif;
+  font-smooth: always;
+  font-weight: 700;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  animation: typeWriterAnimation;
+  font-size: 60px;
+}
+
+p.details {
+  font-family: 'FuturaPT', sans-serif;
+  font-smooth: always;
+  font-weight: 700;
+  list-style: none;
+  text-decoration: none;
+  margin: 0; 
+  color: #fff;
+  animation: typeWriterAnimation;
+  font-size: 60px;
+
+}
+
+nav {
+  background:#000000;
+  color: #fff;
+  text-align: center;
+  padding: 1em;
+  font-family: 'FuturaPT', sans-serif;
+  font-smooth: always;
+  font-weight: 700;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+
+}
+
+section {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #000000;
+  font-size: 30px;
+}
+
+h3{
+  color: #000000;
+}
+ul{
+  color: #000000;
+}
+strong{
+  color: #000000;
+  font-size: 20px;
+}
+
+p {
+  color: #000000;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1em;
+}
+nav a {
+  margin: 0 100px; 
+}
+
+
+nav a {
+  color:#ffffff;
+  transition: color 0.3s ease-in-out; 
+}
+
+nav a:hover {
+  color: #ffd700; 
+}        
+section {
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+section {
+  animation: fadeIn 2s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.section-content {
+  font-family: 'FuturaPT', sans-serif;
+  font-weight: 700;
+  font-smooth: always;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text .hobbies {
+  width: 35%; 
+  text-align: left;
+  padding-left: 60px;
+}
+
+.text {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.text h2 {
+  width: 100%; 
+  margin-bottom: 20px; 
+}
+
+.text .description {
+  width: 60%; 
+}
+
+.image {
+  width: 40vmin;
+  height: 56vmin;
+  object-fit: cover;
+  object-position: 100% center;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+}
+
+.linkedin-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 50px;
+  color: #fff; 
+  text-decoration: none;
+}
+
+.linkedin-icon i {
+  font-size: inherit; 
+  color: inherit; 
+}
+
+.technology-block {
+  display: flex;
+  gap: 8px; 
+  margin-top: 8px; 
+}
+
+.technology {
+  background-color: #333; 
+  color: #fff;
+  padding: 4px 8px; 
+  border-radius: 4px; 
+}
+
+.about-section {
+  background-image: url('aboutme_background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  
+}
+
+.about-section h2 {
+  color: #fff;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.about-section h3 {
+  color: #fff;
+  font-size: 24px;
+}
+
+.about-section p {
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  padding-left: 100px;
+  
+}
+
+.about-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-section li {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+
+
+.slider-container {
+  padding: 2rem;
+}
+
+.slider-wrapper{
+  position: relative;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.slider{
+  display: flex;
+  aspect-ratio: 16/9;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+  border-radius: 0.5rem;
+
+
+}
+
+.slider img{
+  flex: 1 0 100%;
+  scroll-snap-align: start;
+  object-fit: cover;
+}
+
+.slider-nav{
+  display: flex;
+  column-gap: 1rem;
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.slider-nav a{
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0%;
+  background-color: #fff;
+  opacity: 0.75;
+  transition: opacity ease 250ms;
+}
+
+.slider-nav a:hover{
+  opacity: 1;
+}
+
+.github-icon {
+  position: absolute;
+  top: 20px; 
+  left: 70px; 
+  font-size: 30px; 
+  color: #fff; 
+  text-decoration: none;
+}
+
+
+.project-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.project {
+  width: calc(33.33% - 20px); 
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+
+  
+}
+
+.project:hover {
+  transform: scale(1.05); 
+}
+
+/* Styling for Projects section */
+#projects {
+  background-image: url('IMG_5331.jpg'); 
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #fff; 
+  height: 100vh;
+}
