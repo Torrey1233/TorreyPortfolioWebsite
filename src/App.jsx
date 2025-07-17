@@ -24,7 +24,7 @@ function SynthwaveNav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 nav-glass">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b shadow-md">
       {/* Desktop Navigation */}
       <div className="hidden md:flex justify-center items-center gap-8 py-6 px-8">
         {navItems.map((item) => (
@@ -32,10 +32,10 @@ function SynthwaveNav() {
             key={item.name}
             to={item.path}
             className={({ isActive }) =>
-              `relative flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-300 hover-glow font-orbitron text-lg ${
+              `relative flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-300 text-lg ${
                 isActive 
-                  ? 'glass-panel text-synthwave-cyan neon-cyan' 
-                  : 'text-synthwave-white hover:text-synthwave-cyan hover:neon-cyan'
+                  ? 'bg-gray-200 text-gray-900 border-b-4 border-blue-400 shadow' 
+                  : 'text-gray-700 hover:bg-gray-100 hover:shadow-md'
               }`
             }
             end={item.path === '/'}
@@ -49,17 +49,9 @@ function SynthwaveNav() {
 
       {/* Mobile Navigation */}
       <div className="md:hidden flex items-center justify-between px-6 py-4">
-        <motion.div
-          className="font-orbitron text-2xl text-gradient-synthwave"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Torrey Liu
-        </motion.div>
-        
+        <div className="text-2xl text-gray-800 font-bold">Torrey Liu</div>
         <button
-          className="text-synthwave-cyan text-2xl hover:text-synthwave-magenta transition-colors duration-300"
+          className="text-blue-500 text-2xl hover:text-gray-800 transition-colors duration-300"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation menu"
         >
@@ -75,7 +67,7 @@ function SynthwaveNav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden glass-panel border-t border-synthwave-cyan/20"
+            className="md:hidden bg-white border-t-2 border-gray-200 shadow"
           >
             <div className="flex flex-col gap-2 p-6">
               {navItems.map((item) => (
@@ -83,10 +75,10 @@ function SynthwaveNav() {
                   key={item.name}
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 font-orbitron text-lg ${
+                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-lg ${
                       isActive 
-                        ? 'text-synthwave-cyan neon-cyan' 
-                        : 'text-synthwave-white hover:text-synthwave-cyan hover:neon-cyan'
+                        ? 'text-blue-500 border-b-2 border-blue-500' 
+                        : 'text-gray-700 hover:text-blue-500'
                     }`
                   }
                   end={item.path === '/'}
@@ -101,56 +93,6 @@ function SynthwaveNav() {
         )}
       </AnimatePresence>
     </nav>
-  );
-}
-
-function SynthwaveParticles() {
-  const particlesInit = useCallback(async (engine) => {
-    await loadSlim(engine);
-  }, []);
-
-  return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={{
-        fullScreen: { enable: true, zIndex: 0 },
-        background: { color: 'transparent' },
-        particles: {
-          number: { value: 50, density: { enable: true, value_area: 800 } },
-          color: { value: ["#00FFFF", "#FF00FF", "#0080FF"] },
-          shape: { type: "circle" },
-          opacity: { value: 0.3, random: true },
-          size: { value: 2, random: { enable: true, minimumValue: 1 } },
-          move: {
-            enable: true,
-            speed: 1,
-            direction: "none",
-            random: true,
-            straight: false,
-            outModes: { default: "out" },
-          },
-          links: {
-            enable: true,
-            distance: 150,
-            color: "#00FFFF",
-            opacity: 0.2,
-            width: 1,
-          },
-        },
-        interactivity: {
-          events: {
-            onHover: { enable: true, mode: "repulse" },
-            onClick: { enable: true, mode: "push" },
-          },
-          modes: {
-            repulse: { distance: 100, duration: 0.4 },
-            push: { quantity: 2 },
-          },
-        },
-        detectRetina: true,
-      }}
-    />
   );
 }
 
@@ -215,7 +157,7 @@ function About() {
   ];
 
   return (
-    <section className="min-h-screen pt-32 px-4">
+    <section className="min-h-screen pt-32 px-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Header with Social Icons */}
         <div className="flex items-center justify-between mb-16">
@@ -230,15 +172,13 @@ function About() {
               href="https://github.com/torrey1233"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-32 h-32 rounded-full glass-card neon-border-cyan overflow-hidden shadow-2xl relative group hover-glow animate-float"
+              className="block w-28 h-28 rounded-full bg-gray-200 overflow-hidden shadow-lg relative group border-4 border-gray-300"
             >
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-synthwave-dark to-synthwave-cyan/10">
-                <FaGithub className="text-5xl text-synthwave-cyan group-hover:text-synthwave-magenta transition-colors duration-500" />
+              <div className="w-full h-full flex items-center justify-center bg-gray-300">
+                <FaGithub className="text-4xl text-gray-700 group-hover:text-blue-500 transition-colors duration-500" />
               </div>
-              <div className="absolute inset-0 rounded-full border-2 border-synthwave-magenta animate-pulse-glow opacity-50"></div>
             </a>
           </motion.div>
-
           {/* Center Title */}
           <motion.div
             className="flex-1 text-center max-w-2xl"
@@ -247,7 +187,7 @@ function About() {
             transition={{ delay: 0.3, duration: 0.8, type: 'spring' }}
           >
             <motion.h1
-              className="text-6xl font-orbitron text-gradient-synthwave mb-4"
+              className="text-6xl font-bold text-gray-800 mb-4"
               initial={{ y: -30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8, type: 'spring' }}
@@ -255,7 +195,7 @@ function About() {
               Torrey Liu
             </motion.h1>
             <motion.p
-              className="text-synthwave-white/80 text-lg font-inter"
+              className="text-gray-700/80 text-lg"
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.8 }}
@@ -263,7 +203,6 @@ function About() {
               Computer Science Student • Data Engineer • Creative Technologist
             </motion.p>
           </motion.div>
-
           {/* LinkedIn Icon - Right Side */}
           <motion.div
             initial={{ x: 100, opacity: 0 }}
@@ -275,17 +214,15 @@ function About() {
               href="https://linkedin.com/in/torreyliu"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-32 h-32 rounded-full glass-card neon-border-magenta overflow-hidden shadow-2xl relative group hover-glow animate-float"
+              className="block w-28 h-28 rounded-full bg-blue-500 overflow-hidden shadow-lg relative group border-4 border-blue-500"
               style={{ animationDelay: '1.5s' }}
             >
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-synthwave-dark to-synthwave-magenta/10">
-                <FaLinkedin className="text-5xl text-synthwave-magenta group-hover:text-synthwave-cyan transition-colors duration-500" />
+              <div className="w-full h-full flex items-center justify-center bg-blue-500">
+                <FaLinkedin className="text-4xl text-white group-hover:text-gray-800 transition-colors duration-500" />
               </div>
-              <div className="absolute inset-0 rounded-full border-2 border-synthwave-cyan animate-pulse-glow opacity-50"></div>
             </a>
           </motion.div>
         </div>
-
         {/* Introduction Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -293,20 +230,19 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-orbitron text-gradient-cyan mb-6 flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
             <span className="text-2xl">🧑‍💻</span>
             Introduction
           </h2>
-          <div className="glass-panel rounded-2xl p-8">
-            <p className="text-synthwave-white/90 text-lg leading-relaxed font-inter">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p className="text-gray-900/90 text-lg">
               I am a 3rd-year Computer Science student at Carleton University, currently working as a Data Engineer Student Intern at Transport Canada. I'm passionate about building interactive digital tools that merge creativity, functionality, and user experience. From AI-integrated applications to immersive web apps, I'm always looking for opportunities to push the boundaries of what tech can do.
             </p>
-            <p className="text-synthwave-white/90 text-lg leading-relaxed font-inter mt-4">
+            <p className="text-gray-900/90 text-lg mt-4">
               Outside of programming, I'm also a visual storyteller with a passion for photography, and I enjoy creative pursuits like music, vlogging, and exploring the world through travel and sports.
             </p>
           </div>
         </motion.div>
-
         {/* Experience Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -314,7 +250,7 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-orbitron text-gradient-cyan mb-6 flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
             <span className="text-2xl">💼</span>
             Experience
           </h2>
@@ -325,22 +261,22 @@ function About() {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.2 }}
-                className="glass-card rounded-2xl p-6 hover-glow"
+                className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg"
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-orbitron text-gradient-magenta mb-1">
+                    <h3 className="text-xl font-bold text-gray-800 mb-1">
                       {exp.title}
                     </h3>
-                    <p className="text-synthwave-cyan font-semibold">
+                    <p className="text-blue-500 font-bold">
                       {exp.company}
                     </p>
                   </div>
                   <div className="text-right mt-2 md:mt-0">
-                    <p className="text-synthwave-white/80 font-sharetech">
+                    <p className="text-gray-700/80">
                       {exp.period}
                     </p>
-                    <p className="text-synthwave-white/60 text-sm">
+                    <p className="text-gray-600 text-sm">
                       {exp.location}
                     </p>
                   </div>
@@ -348,8 +284,8 @@ function About() {
                 <ul className="space-y-2">
                   {exp.achievements.map((achievement, achievementIdx) => (
                     <li key={achievementIdx} className="flex items-start gap-3">
-                      <span className="text-synthwave-cyan text-sm mt-1">•</span>
-                      <span className="text-synthwave-white/80 font-inter">
+                      <span className="text-blue-500 text-sm mt-1">•</span>
+                      <span className="text-gray-700/80">
                         {achievement}
                       </span>
                     </li>
@@ -359,7 +295,6 @@ function About() {
             ))}
           </div>
         </motion.div>
-
         {/* Relevant Coursework Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -367,11 +302,11 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-orbitron text-gradient-cyan mb-6 flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
             <span className="text-2xl">📚</span>
             Relevant Coursework
           </h2>
-          <div className="glass-panel rounded-2xl p-8">
+          <div className="bg-white p-6 rounded-lg shadow-md">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {courses.map((course, idx) => (
                 <motion.div
@@ -379,9 +314,9 @@ function About() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="glass-card rounded-xl p-4 hover-glow"
+                  className="bg-white p-4 rounded-lg shadow-md hover:shadow-md"
                 >
-                  <p className="text-synthwave-white/90 font-sharetech text-sm">
+                  <p className="text-gray-900/90 font-bold text-sm">
                     {course}
                   </p>
                 </motion.div>
@@ -389,7 +324,6 @@ function About() {
             </div>
           </div>
         </motion.div>
-
         {/* Hobbies & Interests Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -397,7 +331,7 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-orbitron text-gradient-cyan mb-6 flex items-center gap-3">
+          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
             <span className="text-2xl">🎸</span>
             Hobbies & Interests
           </h2>
@@ -409,22 +343,21 @@ function About() {
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="glass-card rounded-2xl p-6 text-center hover-glow group cursor-pointer"
+                className="bg-white p-6 rounded-lg shadow-md hover:shadow-md group cursor-pointer"
               >
                 <div className="text-4xl mb-3 group-hover:animate-pulse">
                   {hobby.icon}
                 </div>
-                <h3 className="text-synthwave-cyan font-orbitron text-lg mb-2">
+                <h3 className="text-blue-500 font-bold text-lg mb-2">
                   {hobby.name}
                 </h3>
-                <p className="text-synthwave-white/70 text-sm font-inter">
+                <p className="text-gray-700/70 text-sm">
                   {hobby.description}
                 </p>
               </motion.div>
             ))}
           </div>
         </motion.div>
-
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -435,11 +368,11 @@ function About() {
           <div className="flex gap-6 justify-center flex-wrap">
             <button 
               onClick={() => navigate('/projects')}
-              className="retro-btn px-8 py-4 rounded-xl font-orbitron text-lg"
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition-colors duration-300"
             >
               View Projects
             </button>
-            <button className="glitch-btn px-8 py-4 rounded-xl font-orbitron text-lg" data-text="Download Resume">
+            <button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition-colors duration-300" data-text="Download Resume">
               Download Resume
             </button>
           </div>
@@ -478,17 +411,16 @@ const projects = [
 
 function Projects() {
   return (
-    <section className="min-h-screen pt-32 px-4">
+    <section className="min-h-screen pt-32 px-4 bg-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="text-5xl font-orbitron text-gradient-synthwave text-center mb-16">
+        <h2 className="text-5xl font-bold text-gray-800 text-center mb-16">
           Projects
         </h2>
-        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {projects.map((project, idx) => (
             <motion.div
@@ -499,37 +431,32 @@ function Projects() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="group"
             >
-              <div className="glass-card rounded-2xl overflow-hidden hover-glow h-full relative">
+              <div className="bg-white p-6 rounded-lg shadow-lg h-full relative overflow-hidden">
                 {/* Winner Label */}
                 {project.isWinner && (
                   <div className="absolute top-4 left-4 z-10">
-                    <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-synthwave-dark font-bold px-3 py-1 rounded-full text-sm shadow-lg transform -rotate-12 border-2 border-yellow-300">
-                      WINNER
-                    </div>
+                    <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">WINNER</span>
                   </div>
                 )}
-                
                 <div className="relative overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 border-b-2 border-gray-200"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-synthwave-dark/80 to-transparent"></div>
                 </div>
-                
                 <div className="p-6">
-                  <h3 className="text-2xl font-orbitron text-gradient-cyan mb-3 group-hover:text-gradient-magenta transition-all duration-300">
+                  <h3 className="text-2xl font-bold text-blue-500 mb-3 group-hover:text-gray-800 transition-all duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-synthwave-white/80 mb-4 font-inter leading-relaxed text-sm">
+                  <p className="text-gray-700/80 mb-4 leading-relaxed text-sm">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 text-xs rounded-full glass-panel text-synthwave-cyan font-sharetech border border-synthwave-cyan/30"
+                        className="px-2 py-1 text-xs rounded-full bg-gray-200 text-gray-700 font-bold border border-gray-300"
                       >
                         {tech}
                       </span>
@@ -547,51 +474,47 @@ function Projects() {
 
 function Resume() {
   const resumeUrl = '/Torrey_Liu_CS_Resume_Updated_2025.pdf';
-
   return (
-    <section className="min-h-screen pt-32 px-4">
+    <section className="min-h-screen pt-32 px-4 bg-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-4xl mx-auto"
       >
-        <h2 className="text-5xl font-orbitron text-gradient-synthwave text-center mb-12">
+        <h2 className="text-5xl font-bold text-gray-800 text-center mb-12">
           Resume
         </h2>
-        
-        <div className="glass-panel rounded-2xl p-8 shadow-2xl">
+        <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex flex-col items-center">
             <div className="text-center mb-8">
-              <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-synthwave-cyan to-synthwave-magenta rounded-full flex items-center justify-center">
-                <FaFilePdf className="text-4xl text-synthwave-dark" />
+              <div className="w-24 h-24 mx-auto mb-4 bg-blue-500 rounded-full flex items-center justify-center">
+                <FaFilePdf className="text-4xl text-white" />
               </div>
-              <h3 className="text-2xl font-orbitron text-gradient-synthwave mb-2">
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">
                 Torrey Liu - Resume
               </h3>
-              <p className="text-synthwave-white/80 font-inter">
+              <p className="text-gray-700/80">
                 Computer Science Student & Software Developer
               </p>
             </div>
-            
-            <div className="text-center mb-8 p-6 glass-panel rounded-xl">
-              <p className="text-synthwave-cyan font-orbitron text-lg mb-4">
+            <div className="text-center mb-8 p-6 bg-gray-200 rounded-lg border-2 border-gray-300">
+              <p className="text-blue-500 font-bold text-lg mb-4">
                 📄 Resume Available for Download
               </p>
-              <p className="text-synthwave-white text-sm mb-4">
+              <p className="text-gray-700 text-sm mb-4">
                 Click the button below to download and view my resume
               </p>
-              <p className="text-synthwave-white/60 text-xs">
+              <p className="text-gray-600 text-xs">
                 Includes: Education, Experience, Skills, Projects
               </p>
             </div>
           </div>
-          
           <div className="flex justify-center mt-8">
             <a
               href={resumeUrl}
               download
-              className="glitch-btn px-8 py-4 rounded-xl font-orbitron text-lg"
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition-colors duration-300"
               data-text="Download PDF"
             >
               Download PDF
@@ -644,19 +567,17 @@ const photographyImages = [
 
 function Photography() {
   const [selectedImage, setSelectedImage] = useState(null);
-
   return (
-    <section className="min-h-screen pt-32 px-4">
+    <section className="min-h-screen pt-32 px-4 bg-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="text-5xl font-orbitron text-gradient-synthwave text-center mb-16">
+        <h2 className="text-5xl font-bold text-gray-800 text-center mb-16">
           Photography Portfolio
         </h2>
-        
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {photographyImages.map((image, idx) => (
             <motion.div
@@ -668,16 +589,15 @@ function Photography() {
               className="group cursor-pointer"
               onClick={() => setSelectedImage(image)}
             >
-              <div className="glass-card rounded-xl overflow-hidden hover-glow">
+              <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl">
                 <div className="relative overflow-hidden">
                   <img
                     src={image.thumb}
                     alt={image.alt}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 border-b-2 border-gray-200"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-synthwave-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="text-synthwave-white font-orbitron text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="text-gray-800 font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       {image.title}
                     </h3>
                   </div>
@@ -687,7 +607,6 @@ function Photography() {
           ))}
         </div>
       </motion.div>
-      
       {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedImage && (
@@ -695,7 +614,7 @@ function Photography() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-synthwave-dark/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-gray-900/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
@@ -708,18 +627,18 @@ function Photography() {
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+                className="w-full h-auto max-h-[80vh] object-contain rounded-2xl shadow-2xl border-4 border-gray-300"
               />
               <div className="absolute top-4 right-4">
                 <button
                   onClick={() => setSelectedImage(null)}
-                  className="text-synthwave-white text-3xl hover:text-synthwave-cyan transition-colors duration-300"
+                  className="text-gray-300 text-3xl hover:text-blue-500 transition-colors duration-300"
                 >
                   <FaTimes />
                 </button>
               </div>
               <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="text-synthwave-white font-orbitron text-xl">
+                <h3 className="text-white font-bold text-xl">
                   {selectedImage.title}
                 </h3>
               </div>
@@ -734,8 +653,7 @@ function Photography() {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen synthwave-bg text-synthwave-white font-inter relative overflow-x-hidden">
-        <SynthwaveParticles />
+      <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
         <div className="relative z-10">
           <SynthwaveNav />
           <main>
