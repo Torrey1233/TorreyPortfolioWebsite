@@ -1,64 +1,81 @@
-/* === Cyberpunk Futuristic Theme === */
-/* Removed all neon, glass, and retro styles for a clean, modern look */
+/* === Cyberpunk Neon Utilities === */
 :root {
-  --primary-bg: #f9f9f9;
-  --primary-text: #222;
-  --secondary-bg: #fff;
-  --secondary-text: #555;
-  --border: #e0e0e0;
+  --neon-blue: #00ffff;
+  --neon-purple: #a259ff;
+  --neon-pink: #ff2fd6;
+  --neon-yellow: #fff200;
+}
+
+.cyber-bg {
+  background: #0d0d0d;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
 }
 
 body, .cyber-bg {
-  background: var(--primary-bg);
-  color: var(--primary-text);
   font-family: 'Inter', 'Roboto', Arial, sans-serif;
+  color: #f3f3f3;
 }
 
-.mono {
-  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: none; }
+}
+.fade-in {
+  animation: fadeIn 1s cubic-bezier(.4,0,.2,1) both;
+}
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+.scale-up {
+  animation: scaleUp 0.7s cubic-bezier(.4,0,.2,1) both;
+}
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.7; }
+  48% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  53% { opacity: 0.4; }
+  55% { opacity: 1; }
+}
+.flicker {
+  animation: flicker 2.2s infinite;
 }
 
-/* Minimal card style */
-.glass-card, .glass-panel, .glass-modal {
-  background: var(--secondary-bg);
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  border: 1px solid var(--border);
-  color: var(--primary-text);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+/* Utility: Only keep if used in index.css or globally */
+.text-neon-pink { color: var(--neon-pink); }
+.text-neon-purple { color: var(--neon-purple); }
+.text-neon-yellow { color: var(--neon-yellow); }
+.bg-neon-blue { background: var(--neon-blue); }
+.bg-neon-pink { background: var(--neon-pink); }
+.bg-neon-purple { background: var(--neon-purple); }
+.bg-neon-yellow { background: var(--neon-yellow); }
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #181818;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--neon-blue);
+  border-radius: 8px;
 }
 
-/* Remove all neon, glitch, and retro effects */
-.neon-text, .neon-border, .neon-glow, .badge-neon, .flicker, .glow-hover, .dev-card, .section-title, .text-neon-blue, .text-neon-pink, .text-neon-purple, .text-neon-yellow, .bg-neon-blue, .bg-neon-pink, .bg-neon-purple, .bg-neon-yellow, .gallery-img, .gallery-img:hover, .gallery-zoom, .gallery-zoom:hover, .glass-badge {
-  all: unset;
+/* Digital Noise Overlay */
+.noise-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.12;
+  background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.5"/></svg>');
 }
 
-.carousel {
-  width: 100vw;
-  overflow-x: auto;
-  display: flex;
-  gap: 2rem;
-  padding: 2rem 0;
-  scroll-snap-type: x mandatory;
-}
-
-.gallery-img {
-  width: 400px;
-  height: 260px;
-  object-fit: cover;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  transition: transform 0.3s, box-shadow 0.3s;
-  scroll-snap-align: center;
-  cursor: pointer;
-}
-
-.gallery-img:hover, .gallery-zoom:hover {
-  transform: scale(1.04);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-
+/* Responsive */
 @media (max-width: 600px) {
   .carousel {
     gap: 1rem;
@@ -67,17 +84,13 @@ body, .cyber-bg {
     width: 90vw;
     height: 180px;
   }
+  .dev-grid {
+    gap: 1rem;
+  }
+  .section-title,
+  .section-title-alt {
+    font-size: 1.3rem;
+    padding: 0.5em 1em;
+  }
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  background: #eee;
-}
-::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 8px;
-}
-
-.noise-overlay {
-  display: none;
-}

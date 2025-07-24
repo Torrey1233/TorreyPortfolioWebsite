@@ -2,46 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Minimal base styling */
+/* === Cyberpunk Futuristic Theme Base === */
 @layer base {
   body {
-    background: #f9f9f9;
-    color: #222;
-    font-family: 'Inter', sans-serif;
+    background: #0d0d0d;
+    color: #f3f3f3;
+    font-family: 'Inter', 'Roboto', Arial, sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
   }
+  
+  /* Neon Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #eee;
+    background: #181818;
   }
   ::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #bbb;
+    background: linear-gradient(180deg, #00ffff, #a259ff, #ff2fd6);
+    border-radius: 8px;
   }
 }
 
+:root {
+  --neon-blue: #00ffff;
+  --neon-purple: #a259ff;
+  --neon-pink: #ff2fd6;
+  --glass-bg: rgba(30, 30, 40, 0.55);
+  --glass-border: rgba(0,255,255,0.18);
+}
+
 @layer components {
-  .glass-panel, .glass-card, .glass-modal {
-    background: #fff;
-    border-radius: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    border: 1px solid #e0e0e0;
-    color: #222;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+  /* Glassmorphism Card/Panel */
+  .glass-card, .glass-panel, .glass-modal {
+    background: var(--glass-bg);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.45), 0 0 24px var(--neon-blue);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1.5px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
   }
-  .retro-btn, .glitch-btn, .neon-cyan, .neon-magenta, .neon-border-cyan, .neon-border-magenta, .glitch, .synthwave-bg, .hover-glow, .nav-glass, .particle-overlay, .hover-glow:hover, .retro-btn::before, .retro-btn:hover::before, .retro-btn:hover, .glitch-btn:hover, .glass-badge, .text-gradient-cyan, .text-gradient-magenta, .text-gradient-synthwave, .grid-pattern, .animate-float, .animate-pulse-glow {
-    all: unset;
+  /* Neon Text/Border Utilities */
+  .neon-text {
+    color: var(--neon-blue);
+    text-shadow: 0 0 8px var(--neon-blue), 0 0 16px var(--neon-blue);
+  }
+  .neon-border {
+    border: 2px solid var(--neon-pink);
+    box-shadow: 0 0 12px var(--neon-pink), 0 0 32px var(--neon-pink);
+  }
+  .neon-glow {
+    box-shadow: 0 0 16px var(--neon-blue), 0 0 32px var(--neon-purple);
+  }
+  /* Flicker Animation */
+  .flicker {
+    animation: flicker 2.2s infinite;
+  }
+  /* Digital Noise Overlay */
+  .noise-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.12;
+    background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.5"/></svg>');
   }
 }
 
 @layer utilities {
-  /* Remove all custom animations and gradients */
+  /* Fade-in Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: none; }
+  }
+  .fade-in {
+    animation: fadeIn 1s cubic-bezier(.4,0,.2,1) both;
+  }
+  /* Scale-up Animation */
+  @keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .scale-up {
+    animation: scaleUp 0.7s cubic-bezier(.4,0,.2,1) both;
+  }
+  /* Glowing Hover */
+  .glow-hover {
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+  .glow-hover:hover {
+    box-shadow: 0 0 24px var(--neon-blue), 0 0 48px var(--neon-pink);
+    border-color: var(--neon-blue);
+  }
+  /* Flicker Animation */
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    45% { opacity: 0.7; }
+    48% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+    53% { opacity: 0.4; }
+    55% { opacity: 1; }
+  }
 }
 
 

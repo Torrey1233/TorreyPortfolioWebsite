@@ -5,7 +5,7 @@ import {
   NavLink,
   useNavigate,
 } from 'react-router-dom';
-import { FaUser, FaProjectDiagram, FaFilePdf, FaCameraRetro, FaBars, FaGithub, FaLinkedin, FaTimes } from 'react-icons/fa';
+import { FaUser, FaProjectDiagram, FaFilePdf, FaCameraRetro, FaBars, FaGithub, FaLinkedin, FaTimes, FaHome, FaEnvelope } from 'react-icons/fa';
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,6 +14,7 @@ import { loadSlim } from "@tsparticles/slim";
 import { useCallback } from "react";
 
 const navItems = [
+  { name: 'Home', path: '/home', icon: <FaHome /> },
   { name: 'About', path: '/', icon: <FaUser /> },
   { name: 'Projects', path: '/projects', icon: <FaProjectDiagram /> },
   { name: 'Resume', path: '/resume', icon: <FaFilePdf /> },
@@ -24,41 +25,57 @@ function SynthwaveNav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b shadow-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#181818] border-b-4 border-[var(--neon-blue)] shadow-md">
       {/* Desktop Navigation */}
-      <div className="hidden md:flex justify-center items-center gap-8 py-6 px-8">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            className={({ isActive }) =>
-              `relative flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-300 text-lg ${
-                isActive 
-                  ? 'bg-gray-200 text-gray-900 border-b-4 border-blue-400 shadow' 
-                  : 'text-gray-700 hover:bg-gray-100 hover:shadow-md'
-              }`
-            }
-            end={item.path === '/'}
-            onClick={() => setMenuOpen(false)}
+      <div className="hidden md:flex justify-between items-center py-6 px-8">
+        {/* Left Spacer */}
+        <div className="w-64"></div>
+        
+        {/* Centered Navigation Items */}
+        <div className="flex items-center gap-8">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              className={({ isActive }) =>
+                `relative flex items-center gap-3 px-6 py-3 rounded-xl transition-all duration-300 text-lg font-mono ${
+                  isActive 
+                    ? 'bg-[#23233a] text-cyan-300 border-2 border-pink-500 shadow-lg drop-shadow-[0_0_16px_#00ffff] hover:shadow-xl' 
+                    : 'text-cyan-300 hover:bg-[#23233a]/80 hover:shadow-md hover:drop-shadow-[0_0_24px_#00ffff]'
+                }`
+              }
+              end={item.path === '/'}
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.icon}
+              {item.name}
+            </NavLink>
+          ))}
+        </div>
+        
+        {/* Contact Info - Right Side */}
+        <div className="w-64 text-center p-3">
+          <h3 className="text-sm font-bold mb-1 text-cyan-300">Shoot me a message!</h3>
+          <p className="text-xs mb-1">Let's coffee chat!</p>
+          <a 
+            href="mailto:torreyliu2004@gmail.com" 
+            className="text-[var(--neon-blue)] hover:text-[var(--neon-pink)] transition-colors duration-300 underline text-xs"
           >
-            {item.icon}
-            {item.name}
-          </NavLink>
-        ))}
+            torreyliu2004@gmail.com
+          </a>
+        </div>
       </div>
-
       {/* Mobile Navigation */}
       <div className="md:hidden flex items-center justify-between px-6 py-4">
-        <div className="text-2xl text-gray-800 font-bold">Torrey Liu</div>
+        <div className="font-mono text-2xl text-cyan-300 animate-pulse">Torrey Liu</div>
         <button
-          className="text-blue-500 text-2xl hover:text-gray-800 transition-colors duration-300"
+          className="text-[var(--neon-pink)] text-2xl hover:text-[var(--neon-blue)] transition-colors duration-300"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation menu"
         >
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
-
       {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
@@ -67,7 +84,7 @@ function SynthwaveNav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white border-t-2 border-gray-200 shadow"
+            className="md:hidden bg-[#181818] border-t-2 border-[var(--neon-blue)] shadow"
           >
             <div className="flex flex-col gap-2 p-6">
               {navItems.map((item) => (
@@ -75,10 +92,10 @@ function SynthwaveNav() {
                   key={item.name}
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-lg ${
+                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-lg font-mono ${
                       isActive 
-                        ? 'text-blue-500 border-b-2 border-blue-500' 
-                        : 'text-gray-700 hover:text-blue-500'
+                        ? 'text-cyan-300 border-b-2 border-cyan-300' 
+                        : 'text-cyan-300 hover:text-pink-400'
                     }`
                   }
                   end={item.path === '/'}
@@ -131,6 +148,16 @@ function About() {
         "Developed AI-powered chatbots for Discord, Slack, and WhatsApp using Python, Flask, and GPT-3.5",
         "Enhanced chatbot response flow by integrating OpenAI APIs and conversation memory"
       ]
+    },
+    {
+      title: "Hardware Engineer Intern",
+      company: "PCBest Networks",
+      period: "May 2022 - May 2023",
+      location: "",
+      achievements: [
+        "Replaced server parts and did the required repairs while involving in the troubleshooting and debugging activity to actively maintain optimal functionality among the server infrastructure",
+        "Configured effectual cost-effective components and strategically planned accurate selections for the optimization of high-performance PCs of the company"
+      ]
     }
   ];
 
@@ -157,7 +184,7 @@ function About() {
   ];
 
   return (
-    <section className="min-h-screen pt-32 px-4 bg-gray-50">
+    <section className="min-h-screen pt-44 px-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Header with Social Icons */}
         <div className="flex items-center justify-between mb-16">
@@ -230,15 +257,12 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
-            <span className="text-2xl">🧑‍💻</span>
-            Introduction
-          </h2>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-gray-900/90 text-lg">
+          <h2 className="text-cyan-300 font-bold text-3xl mb-8">Introduction</h2>
+          <div className="bg-[#0a0a1a] text-white rounded-2xl shadow-lg border border-cyan-200 p-8">
+            <p className="text-white text-lg">
               I am a 3rd-year Computer Science student at Carleton University, currently working as a Data Engineer Student Intern at Transport Canada. I'm passionate about building interactive digital tools that merge creativity, functionality, and user experience. From AI-integrated applications to immersive web apps, I'm always looking for opportunities to push the boundaries of what tech can do.
             </p>
-            <p className="text-gray-900/90 text-lg mt-4">
+            <p className="text-white text-lg mt-4">
               Outside of programming, I'm also a visual storyteller with a passion for photography, and I enjoy creative pursuits like music, vlogging, and exploring the world through travel and sports.
             </p>
           </div>
@@ -250,10 +274,7 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
-            <span className="text-2xl">💼</span>
-            Experience
-          </h2>
+          <h2 className="text-cyan-300 font-bold text-3xl mb-8">Experience</h2>
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
               <motion.div
@@ -302,11 +323,8 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
-            <span className="text-2xl">📚</span>
-            Relevant Coursework
-          </h2>
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-cyan-300 font-bold text-3xl mb-8">Relevant Coursework</h2>
+          <div className="bg-[#0a0a1a] text-white rounded-2xl shadow-lg border border-cyan-200 p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {courses.map((course, idx) => (
                 <motion.div
@@ -316,7 +334,7 @@ function About() {
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="bg-white p-4 rounded-lg shadow-md hover:shadow-md"
                 >
-                  <p className="text-gray-900/90 font-bold text-sm">
+                  <p className="text-black font-bold text-sm">
                     {course}
                   </p>
                 </motion.div>
@@ -331,10 +349,7 @@ function About() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-bold text-blue-500 mb-6 flex items-center gap-3">
-            <span className="text-2xl">🎸</span>
-            Hobbies & Interests
-          </h2>
+          <h2 className="text-cyan-300 font-bold text-3xl mb-8">Hobbies & Interests</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {hobbies.map((hobby, idx) => (
               <motion.div
@@ -386,7 +401,7 @@ const projects = [
   {
     title: 'WikiChess',
     description: 'A strategic multiplayer twist on WikiRacer that combines real-time Wikipedia navigation with turn-based gameplay and semantic guessing mechanics, challenging players to outmaneuver each other through both logic and deception.',
-    link: '#',
+    link: 'https://devpost.com/software/wikichess',
     tech: ['Python', 'Flask', 'spaCy', 'Socket.IO', 'BeautifulSoup', 'HTML', 'CSS', 'JavaScript', 'Figma'],
     image: '/images/wikichess.jpg',
     isWinner: true
@@ -394,7 +409,7 @@ const projects = [
   {
     title: 'GAIA: Generative AI Adventure',
     description: 'An immersive AI-powered text-to-video storytelling game where players shape narrative outcomes through dynamic choices interpreted and visualized in real time using generative AI.',
-    link: '#',
+    link: 'https://devpost.com/software/gaia-lcnrqb',
     tech: ['Python', 'Flask', 'OpenAI API', 'Hailuo MiniMax API', 'HTML', 'CSS', 'JavaScript', 'Photoshop', 'multithreading'],
     image: '/images/gaia.jpg',
     isWinner: true
@@ -402,7 +417,7 @@ const projects = [
   {
     title: "Torrey's Portfolio",
     description: 'This very site you\'re on — a stylish, cyberpunk-lite personal portfolio built to showcase my work, photography, and experience with an interactive and futuristic UI.',
-    link: '#',
+    link: 'https://github.com/Torrey1233/TorreyPortfolioWebsite',
     tech: ['React', 'Tailwind CSS', 'Framer Motion', 'shadcn/ui', 'Vite'],
     image: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=600&q=80',
     isWinner: false
@@ -411,16 +426,14 @@ const projects = [
 
 function Projects() {
   return (
-    <section className="min-h-screen pt-32 px-4 bg-gray-50">
+    <section className="min-h-screen pt-44 px-4 bg-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="text-5xl font-bold text-gray-800 text-center mb-16">
-          Projects
-        </h2>
+        <h2 className="text-cyan-300 font-bold text-3xl mb-8">Projects</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {projects.map((project, idx) => (
             <motion.div
@@ -447,7 +460,7 @@ function Projects() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-2xl font-bold text-blue-500 mb-3 group-hover:text-gray-800 transition-all duration-300">
-                    {project.title}
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="hover:underline">{project.title}</a>
                   </h3>
                   <p className="text-gray-700/80 mb-4 leading-relaxed text-sm">
                     {project.description}
@@ -475,16 +488,14 @@ function Projects() {
 function Resume() {
   const resumeUrl = '/Torrey_Liu_CS_Resume_Updated_2025.pdf';
   return (
-    <section className="min-h-screen pt-32 px-4 bg-gray-50">
+    <section className="min-h-screen pt-44 px-4 bg-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-4xl mx-auto"
       >
-        <h2 className="text-5xl font-bold text-gray-800 text-center mb-12">
-          Resume
-        </h2>
+        <h2 className="text-cyan-300 font-bold text-3xl mb-8">Resume</h2>
         <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="flex flex-col items-center">
             <div className="text-center mb-8">
@@ -527,57 +538,49 @@ function Resume() {
 }
 
 const photographyImages = [
-  {
-    src: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=800&q=80',
-    thumb: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=300&q=80',
-    alt: 'Synthwave Cityscape',
-    title: 'Neon Dreams'
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
-    thumb: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=300&q=80',
-    alt: 'Retro Architecture',
-    title: 'Future Past'
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
-    thumb: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=300&q=80',
-    alt: 'Digital Art',
-    title: 'Code Poetry'
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=800&q=80',
-    thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=300&q=80',
-    alt: 'Abstract Technology',
-    title: 'Digital Flow'
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=800&q=80',
-    thumb: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=300&q=80',
-    alt: 'Cyberpunk Scene',
-    title: 'Neon Nights'
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-    thumb: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=300&q=80',
-    alt: 'Data Visualization',
-    title: 'Data Dreams'
-  },
+  { src: '/images/DSC00041-1.jpg', thumb: '/images/DSC00041-1.jpg', alt: 'DSC00041-1', title: 'DSC00041-1' },
+  { src: '/images/DSC00094-2.jpg', thumb: '/images/DSC00094-2.jpg', alt: 'DSC00094-2', title: 'DSC00094-2' },
+  { src: '/images/DSC00203-3.jpg', thumb: '/images/DSC00203-3.jpg', alt: 'DSC00203-3', title: 'DSC00203-3' },
+  { src: '/images/DSC00210-4.jpg', thumb: '/images/DSC00210-4.jpg', alt: 'DSC00210-4', title: 'DSC00210-4' },
+  { src: '/images/DSC01462-1.jpg', thumb: '/images/DSC01462-1.jpg', alt: 'DSC01462-1', title: 'DSC01462-1' },
+  { src: '/images/DSC01506-5-1.jpg', thumb: '/images/DSC01506-5-1.jpg', alt: 'DSC01506-5-1', title: 'DSC01506-5-1' },
+  { src: '/images/DSC01510-9-2.jpg', thumb: '/images/DSC01510-9-2.jpg', alt: 'DSC01510-9-2', title: 'DSC01510-9-2' },
+  { src: '/images/DSC01556-1.jpg', thumb: '/images/DSC01556-1.jpg', alt: 'DSC01556-1', title: 'DSC01556-1' },
+  { src: '/images/DSC01606-2.jpg', thumb: '/images/DSC01606-2.jpg', alt: 'DSC01606-2', title: 'DSC01606-2' },
+  { src: '/images/DSC01621-3.jpg', thumb: '/images/DSC01621-3.jpg', alt: 'DSC01621-3', title: 'DSC01621-3' },
+  { src: '/images/DSC01660-4.jpg', thumb: '/images/DSC01660-4.jpg', alt: 'DSC01660-4', title: 'DSC01660-4' },
+  { src: '/images/DSC01690-5.jpg', thumb: '/images/DSC01690-5.jpg', alt: 'DSC01690-5', title: 'DSC01690-5' },
+  { src: '/images/DSC01734-1.jpg', thumb: '/images/DSC01734-1.jpg', alt: 'DSC01734-1', title: 'DSC01734-1' },
+  { src: '/images/DSC01753-2.jpg', thumb: '/images/DSC01753-2.jpg', alt: 'DSC01753-2', title: 'DSC01753-2' },
+  { src: '/images/DSC01802-3.jpg', thumb: '/images/DSC01802-3.jpg', alt: 'DSC01802-3', title: 'DSC01802-3' },
+  { src: '/images/DSC01824-4.jpg', thumb: '/images/DSC01824-4.jpg', alt: 'DSC01824-4', title: 'DSC01824-4' },
+  { src: '/images/DSC02244-1.jpg', thumb: '/images/DSC02244-1.jpg', alt: 'DSC02244-1', title: 'DSC02244-1' },
+  { src: '/images/DSC02291-1.jpg', thumb: '/images/DSC02291-1.jpg', alt: 'DSC02291-1', title: 'DSC02291-1' },
+  { src: '/images/DSC02296-2.jpg', thumb: '/images/DSC02296-2.jpg', alt: 'DSC02296-2', title: 'DSC02296-2' },
+  
 ];
 
 function Photography() {
   const [selectedImage, setSelectedImage] = useState(null);
   return (
-    <section className="min-h-screen pt-32 px-4 bg-gray-50">
+    <section className="min-h-screen pt-44 px-4 bg-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="text-5xl font-bold text-gray-800 text-center mb-16">
-          Photography Portfolio
-        </h2>
+        <h2 className="text-cyan-300 font-bold text-3xl mb-8">Photography Portfolio</h2>
+        <div className="bg-[#0a0a1a] text-white rounded-2xl shadow-lg border border-cyan-200 p-8">
+          <p className="text-lg mb-4">I love experimenting with different gear to capture unique perspectives. Here’s what I use for my photography adventures:</p>
+          <ul className="list-disc pl-6 space-y-1 text-base">
+            <li><span className="font-bold text-cyan-300">Sony A7 IV</span> &mdash; Full-frame mirrorless</li>
+            <li><span className="font-bold text-cyan-300">Sony 28mm-70mm F3.5</span> &mdash; Versatile zoom lens</li>
+            <li><span className="font-bold text-cyan-300">TTartisan 10mm F2.0</span> &mdash; Ultra-wide for creative shots</li>
+            <li><span className="font-bold text-cyan-300">Canon 80D</span> &mdash; Reliable DSLR</li>
+            <li><span className="font-bold text-cyan-300">Canon 18-135mm F3.5</span> &mdash; All-purpose zoom</li>
+          </ul>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {photographyImages.map((image, idx) => (
             <motion.div
@@ -594,7 +597,7 @@ function Photography() {
                   <img
                     src={image.thumb}
                     alt={image.alt}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 border-b-2 border-gray-200"
+                    className="w-[400px] h-[260px] object-cover rounded-2xl shadow-[0_0_24px_#a259ff,0_0_48px_#00ffff] transition-transform duration-300 cursor-pointer group-hover:scale-105 group-hover:shadow-[0_0_48px_#ff2fd6,0_0_96px_#00ffff] border-b-2 border-gray-200"
                   />
                   <div className="absolute bottom-3 left-3 right-3">
                     <h3 className="text-gray-800 font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -621,7 +624,7 @@ function Photography() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              className="relative max-w-4xl max-h-full"
+              className="relative max-w-4xl max-h-full bg-[rgba(30,30,40,0.85)] rounded-3xl shadow-[0_0_48px_#00ffff,0_0_96px_#ff2fd6] border-2 border-pink-500 p-10 backdrop-blur-xl"
               onClick={(e) => e.stopPropagation()}
             >
               <img
@@ -650,14 +653,90 @@ function Photography() {
   );
 }
 
+function Home() {
+  const navigate = useNavigate();
+  
+  const sections = [
+    {
+      title: "About",
+      description: "Learn about my background, experience, and what drives me as a developer.",
+      path: "/",
+      icon: "👨‍💻"
+    },
+    {
+      title: "Projects", 
+      description: "Explore my technical projects including WikiChess, GAIA, and more.",
+      path: "/projects",
+      icon: "🚀"
+    },
+    {
+      title: "Resume",
+      description: "Download my professional resume with detailed experience and skills.",
+      path: "/resume", 
+      icon: "📄"
+    },
+    {
+      title: "Photography",
+      description: "View my photography portfolio showcasing creative visual storytelling.",
+      path: "/photography",
+      icon: "📷"
+    }
+  ];
+
+  return (
+    <section className="min-h-screen pt-44 px-4 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        {/* Main Content */}
+        <div className="text-center mb-16">
+          <motion.h1
+            className="text-6xl font-bold text-gray-800 mb-4"
+            initial={{ y: -30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.8, type: 'spring' }}
+          >
+            Welcome to My Portfolio
+          </motion.h1>
+        </div>
+
+        {/* Sections Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {sections.map((section, idx) => (
+            <motion.div
+              key={section.title}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="bg-[#0a0a1a] text-white rounded-2xl shadow-lg border border-cyan-200 p-8 cursor-pointer group"
+              onClick={() => navigate(section.path)}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="text-4xl mb-4 group-hover:animate-pulse">
+                {section.icon}
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-cyan-300 group-hover:text-pink-400 transition-colors duration-300">
+                {section.title}
+              </h3>
+              <p>
+                {section.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50 relative overflow-x-hidden">
+      <div className="min-h-screen cyber-bg relative overflow-x-hidden">
+        <div className="noise-overlay" />
         <div className="relative z-10">
           <SynthwaveNav />
           <main>
             <Routes>
+              <Route path="/home" element={<Home />} />
               <Route path="/" element={<About />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/resume" element={<Resume />} />
