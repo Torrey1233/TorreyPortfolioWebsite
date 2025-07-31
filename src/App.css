@@ -55,6 +55,52 @@ body, .cyber-bg {
 .bg-neon-purple { background: var(--neon-purple); }
 .bg-neon-yellow { background: var(--neon-yellow); }
 
+/* Photography Portfolio Specific Styles */
+.photography-masonry {
+  column-gap: 1.5rem;
+}
+
+.photography-masonry > * {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: block;
+  width: 100%;
+}
+
+/* Ensure proper spacing in masonry layout */
+.photography-masonry .photography-card {
+  margin-bottom: 1.5rem;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.photography-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.photography-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.photography-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
+}
+
+/* Typography */
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -91,6 +137,20 @@ body, .cyber-bg {
   .section-title-alt {
     font-size: 1.3rem;
     padding: 0.5em 1em;
+  }
+  
+  /* Photography responsive adjustments */
+  .photography-masonry {
+    columns: 1 !important;
+    column-gap: 1rem;
+  }
+  
+  .photography-masonry > * {
+    margin-bottom: 1rem;
+  }
+  
+  .photography-masonry .photography-card {
+    margin-bottom: 1rem;
   }
 }
 
