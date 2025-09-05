@@ -13,6 +13,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Resume from './components/Resume';
 import Photography from './components/Photography';
+import AdminDashboard from './components/admin/AdminDashboard';
 
 // Sample data for the mixed grid
 const spotlightData = [
@@ -99,21 +100,21 @@ const Homepage = () => {
       <section className="section-spacing bg-primary-50">
         <div className="container-cinematic">
           {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
             <h2 className="text-headline mb-6 text-primary-900">
               Featured Work
             </h2>
             <p className="text-subtitle text-primary-600 max-w-3xl mx-auto">
               A curated selection of my technical projects and photographic explorations, 
               showcasing the intersection of creativity and technology.
-            </p>
-          </motion.div>
+          </p>
+        </motion.div>
 
           {/* Mixed Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -125,10 +126,10 @@ const Homepage = () => {
                 index={index}
               />
             ))}
-          </div>
+              </div>
 
           {/* View All CTA */}
-          <motion.div
+              <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -148,9 +149,9 @@ const Homepage = () => {
               >
                 View All Photography
               </a>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
+              </div>
       </section>
 
       {/* About Preview Section */}
@@ -162,11 +163,11 @@ const Homepage = () => {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8 }}
             >
               <h2 className="text-headline mb-6 text-primary-900">
                 Creative Technologist
-              </h2>
+                    </h2>
               <p className="text-body text-primary-600 mb-6">
                 I am a 3rd-year Computer Science student at Carleton University, currently working as a Data Engineer Student Intern at Transport Canada. 
                 I'm passionate about building interactive digital tools that merge creativity, functionality, and user experience.
@@ -181,10 +182,10 @@ const Homepage = () => {
               >
                 Learn More About Me
               </a>
-            </motion.div>
+                          </motion.div>
 
             {/* Image */}
-            <motion.div
+          <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -197,12 +198,12 @@ const Homepage = () => {
                   alt="Creative technologist at work"
                   className="w-full h-full object-cover"
                 />
-              </div>
+                        </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-500 rounded-2xl opacity-20"></div>
             </motion.div>
-          </div>
         </div>
-      </section>
+      </div>
+    </section>
     </>
   );
 };
@@ -213,14 +214,15 @@ function App() {
       <div className="min-h-screen bg-white">
         <Navigation />
         <main className="pt-16 lg:pt-20">
-          <Routes>
+            <Routes>
             <Route path="/home" element={<Homepage />} />
-            <Route path="/" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/photography" element={<Photography />} />
-          </Routes>
-        </main>
+              <Route path="/" element={<About />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/photography" element={<Photography />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+            </Routes>
+          </main>
         <Footer />
       </div>
     </Router>

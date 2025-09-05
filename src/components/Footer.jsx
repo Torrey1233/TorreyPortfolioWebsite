@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, /* FaInstagram, */ FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
   const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/torrey1233', icon: <FaGithub /> },
     { name: 'LinkedIn', url: 'https://linkedin.com/in/torreyliu', icon: <FaLinkedin /> },
-    { name: 'Instagram', url: 'https://instagram.com/torreyliu', icon: <FaInstagram /> },
+    // { name: 'Instagram', url: 'https://instagram.com/torreyliu', icon: <FaInstagram /> },
     { name: 'Email', url: 'mailto:torreyliu2004@gmail.com', icon: <FaEnvelope /> },
   ];
 

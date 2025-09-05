@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Core Image model (extended from existing)
+model Image {
+  id            String   @id @default(cuid())
+  folderId      String?  // NEW: physical folder
+  folder        Folder?  @relation(fields: [folderId], references: [id])
+  checksum      String?  @unique // NEW: SHA256 for dedupe
+  filename      String?  // NEW: stored filename used on S3
+  
+  // Existing fields (preserved from current system)
+  title         String?
+  category      String?
+  date          String?
+  location      String?
+  description   String?
+  camera        String?
+  lens          String?
+  settings      Json?    // EXIF data
+  tags          String[] // Array of tags
+  featured      Boolean  @default(false)
+  
+  // Album relationships
+  albumImages   AlbumImage[]
+  albumCovers   Album[]   @relation("AlbumCover")
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("images")
+}
+
+// Folder organization system
+model Folder {
+  id          String   @id @default(cuid())
+  name        String
+  path        String   @unique  // logical path (e.g., /photos/2025/09/11)
+  parentId    String?
+  parent      Folder?  @relation("FolderToChildren", fields: [parentId], references: [id])
+  children    Folder[] @relation("FolderToChildren")
+  images      Image[]  // images housed in this folder (physical location)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("folders")
+}
+
+// Virtual albums/collections (Lightroom-style)
+model Album {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  coverImageId String?
+  coverImage  Image?   @relation("AlbumCover", fields: [coverImageId], references: [id])
+  images      AlbumImage[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("albums")
+}
+
+// Many-to-many relationship between albums and images
+model AlbumImage {
+  id        String @id @default(cuid())
+  albumId   String
+  imageId   String
+  order     Int    @default(0)
+  album     Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  image     Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@unique([albumId, imageId])
+  @@map("album_images")
+}
+
+// Import job tracking
+model ImportJob {
+  id          String   @id @default(cuid())
+  sourcePath  String   // local or S3 prefix
+  mode        ImportMode
+  startedAt   DateTime @default(now())
+  finishedAt  DateTime?
+  status      ImportStatus @default(PENDING)
+  created     Int      @default(0)
+  skipped     Int      @default(0)
+  deduped     Int      @default(0)
+  errors      Int      @default(0)
+  log         String?
+  config      Json?    // Import configuration (strategy, filters, etc.)
+
+  @@map("import_jobs")
+}
+
+// Blog posts (extending existing system)
+model BlogPost {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  content     String?
+  description String?
+  date        DateTime
+  images      String[] // Array of image filenames
+  tags        String[]
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("blog_posts")
+}
+
+// User management (for admin access)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      UserRole @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// Organization strategies configuration
+model OrganizationStrategy {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  template    String   // Template for folder structure
+  filenameTemplate String // Template for filename generation
+  active      Boolean  @default(false)
+  config      Json?    // Additional configuration
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("organization_strategies")
+}
+
+// Enums
+enum ImportMode { 
+  SCAN_ONLY 
+  INGEST_MOVE 
+  INGEST_COPY 
+}
+
+enum ImportStatus { 
+  PENDING 
+  RUNNING 
+  DONE 
+  FAILED 
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}

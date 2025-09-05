@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NavLink, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { FaBars, FaTimes, FaGithub, FaLinkedin, /* FaInstagram */ } from 'react-icons/fa';
 
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,7 +18,7 @@ const Navigation = () => {
   const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/torrey1233', icon: <FaGithub /> },
     { name: 'LinkedIn', url: 'https://linkedin.com/in/torreyliu', icon: <FaLinkedin /> },
-    { name: 'Instagram', url: 'https://instagram.com/torreyliu', icon: <FaInstagram /> },
+    // { name: 'Instagram', url: 'https://instagram.com/torreyliu', icon: <FaInstagram /> },
   ];
 
   useEffect(() => {

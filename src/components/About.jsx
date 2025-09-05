@@ -131,34 +131,14 @@ const About = () => {
                   <p className="text-subtitle text-primary-600 mb-4">
                     Computer Science Student • Data Engineer • Creative Technologist
                   </p>
+                  <p className="text-body text-primary-700 leading-relaxed mb-4">
+                    I am a 3rd-year Computer Science student at Carleton University, currently working as a Data Engineer Student Intern at Transport Canada. I'm passionate about building interactive digital tools that merge creativity, functionality, and user experience. From AI-integrated applications to immersive web apps, I'm always looking for opportunities to push the boundaries of what tech can do.
+                  </p>
                   <p className="text-body text-primary-700 leading-relaxed">
-                    I am a 3rd-year Computer Science student at Carleton University, currently working as a Data Engineer Student Intern at Transport Canada. I'm passionate about building interactive digital tools that merge creativity, functionality, and user experience.
+                    Outside of programming, I'm also a visual storyteller with a passion for photography, and I enjoy creative pursuits like music, vlogging, and exploring the world through travel and sports.
                   </p>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Introduction Section */}
-      <section className="section-spacing">
-        <div className="container-cinematic">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mb-16"
-          >
-            <h2 className="text-headline mb-8 text-primary-900">Introduction</h2>
-            <div className="card p-8 bg-primary-900 text-white">
-              <p className="text-body leading-relaxed mb-4">
-                I am a 3rd-year Computer Science student at Carleton University, currently working as a Data Engineer Student Intern at Transport Canada. I'm passionate about building interactive digital tools that merge creativity, functionality, and user experience. From AI-integrated applications to immersive web apps, I'm always looking for opportunities to push the boundaries of what tech can do.
-              </p>
-              <p className="text-body leading-relaxed">
-                Outside of programming, I'm also a visual storyteller with a passion for photography, and I enjoy creative pursuits like music, vlogging, and exploring the world through travel and sports.
-              </p>
             </div>
           </motion.div>
 
