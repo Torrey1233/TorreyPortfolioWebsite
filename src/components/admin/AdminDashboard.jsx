@@ -1,46 +1,43 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  FaFolder, 
   FaImages, 
-  FaUpload, 
-  FaCog, 
-  FaChartBar,
   FaDatabase,
   FaCloud,
   FaBlog,
-  FaStar
+  FaStar,
+  FaEnvelope
 } from 'react-icons/fa';
-import FolderManager from './FolderManager';
 import AlbumManager from './AlbumManager';
-import ImportPanel from './ImportPanel';
 import BlogPostManager from './BlogPostManager';
 import FeaturedPhotosManager from './FeaturedPhotosManager';
+import PhotographyManager from './PhotographyManager';
+import SubscriberManager from './SubscriberManager';
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState('folders');
+  const [activeTab, setActiveTab] = useState('albums');
 
   const tabs = [
     {
-      id: 'folders',
-      name: 'Folders',
-      icon: FaFolder,
-      component: FolderManager,
-      description: 'Manage folder structure and organization'
+      id: 'photography',
+      name: 'Photography Manager',
+      icon: FaImages,
+      component: PhotographyManager,
+      description: 'Upload, organize, and manage your photography portfolio with drag-and-drop ordering'
     },
     {
       id: 'albums',
-      name: 'Albums',
+      name: 'Album Manager',
       icon: FaImages,
       component: AlbumManager,
-      description: 'Create and manage virtual photo collections'
+      description: 'View and manage all photos including blog photos'
     },
     {
       id: 'blog-posts',
       name: 'Blog Posts',
       icon: FaBlog,
       component: BlogPostManager,
-      description: 'Create and manage blog posts with photos'
+      description: 'Create, view, and edit blog posts with photos'
     },
     {
       id: 'featured',
@@ -50,18 +47,11 @@ const AdminDashboard = () => {
       description: 'Select which photos to feature in each gallery category'
     },
     {
-      id: 'import',
-      name: 'Import',
-      icon: FaUpload,
-      component: ImportPanel,
-      description: 'Bulk import and organize photos'
-    },
-    {
-      id: 'settings',
-      name: 'Settings',
-      icon: FaCog,
-      component: () => <div className="p-8 text-center text-gray-500">Settings panel coming soon</div>,
-      description: 'Configure organization strategies and preferences'
+      id: 'subscribers',
+      name: 'Email Subscribers',
+      icon: FaEnvelope,
+      component: SubscriberManager,
+      description: 'Manage blog notification subscribers'
     }
   ];
 

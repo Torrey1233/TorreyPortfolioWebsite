@@ -2,12 +2,15 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUpload, FaSpinner, FaCheck, FaTimes, FaImages } from 'react-icons/fa';
 
+const API_BASE_URL = 'http://localhost:3001';
+
 const PhotoUploader = ({ onUploadComplete, onClose }) => {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [error, setError] = useState(null);
   const [currentFiles, setCurrentFiles] = useState([]);
+  const [uploadResult, setUploadResult] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleFileSelect = (event) => {
@@ -50,7 +53,7 @@ const PhotoUploader = ({ onUploadComplete, onClose }) => {
     setUploadProgress(30);
 
     try {
-      const response = await fetch('http://localhost:3001/api/upload', {
+      const response = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -59,18 +62,53 @@ const PhotoUploader = ({ onUploadComplete, onClose }) => {
       setUploadProgress(70);
 
       const result = await response.json();
+      console.log('Upload response:', result);
+      console.log('Response status:', response.status);
+      console.log('Result success:', result.success);
+      console.log('Result uploaded:', result.uploaded);
+      console.log('Result images:', result.images);
+      
+      // Store result in state
+      setUploadResult(result);
 
-      if (response.ok) {
-        setUploadedFiles(result.images);
+      // Check if upload was successful (files were saved)
+      // Success if: response is OK AND (success is true OR files were uploaded)
+      const isSuccess = response.ok && (result.success === true || (result.uploaded && result.uploaded > 0));
+      
+      if (isSuccess) {
+        // Show uploaded files (even if some don't have DB records yet)
+        const imagesToShow = result.images || [];
+        console.log('Setting uploaded files:', imagesToShow);
+        console.log('Uploaded files count:', imagesToShow.length);
+        setUploadedFiles(imagesToShow);
         setUploadProgress(100);
+        console.log('Upload state updated - uploading set to false, files set');
         
-        // Call the callback with uploaded images
-        if (onUploadComplete) {
-          onUploadComplete(result.images);
+        // Show warning if DB records weren't created for all files
+        if (result.uploaded > (result.dbRecordsCreated || imagesToShow.length)) {
+          const missingDbRecords = result.uploaded - (result.dbRecordsCreated || imagesToShow.length);
+          setError(`${result.uploaded} file(s) saved successfully. ${result.dbRecordsCreated || imagesToShow.length} have database records. ${missingDbRecords} file(s) saved but need database records (they'll appear in filesystem sync).`);
+        } else if (result.errors > 0 && result.uploaded > 0) {
+          setError(`${result.uploaded} photos uploaded successfully, but ${result.errors} failed. ${result.firstError ? `First error: ${result.firstError}` : ''}`);
+        } else if (imagesToShow.length === 0 && result.uploaded > 0) {
+          // Files were saved but no images in response - show success message
+          setError(`Successfully saved ${result.uploaded} file(s). Files are saved but database records need to be created. Use "Sync Photos" in Album Manager to add them to the database.`);
+        }
+        
+        // Don't close modal immediately - let user see the success
+        // The callback will be called when user clicks "Done"
+        // But refresh the parent component in the background
+        if (onUploadComplete && imagesToShow.length > 0) {
+          // Refresh parent component after a short delay to allow DB to sync
+          setTimeout(() => {
+            onUploadComplete(imagesToShow);
+          }, 500);
         }
       } else {
-        setError(result.error || 'Upload failed');
+        const errorMsg = result.error || result.firstError || result.message || 'Upload failed';
+        setError(errorMsg);
         console.error('Upload error:', result);
+        console.error('Response was not successful. Status:', response.status);
       }
     } catch (err) {
       console.error('Upload error:', err);
@@ -98,6 +136,7 @@ const PhotoUploader = ({ onUploadComplete, onClose }) => {
     setUploadedFiles([]);
     setCurrentFiles([]);
     setError(null);
+    setUploadResult(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -175,11 +214,11 @@ const PhotoUploader = ({ onUploadComplete, onClose }) => {
           </div>
         )}
 
-        {uploadedFiles.length > 0 && (
+        {!uploading && (uploadedFiles.length > 0 || (uploadResult && uploadResult.uploaded > 0)) && (
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-gray-900">
-                Upload Complete! ({uploadedFiles.length} photos)
+                Upload Complete! ({uploadedFiles.length || (uploadResult?.uploaded || 0)} file(s))
               </h3>
               <div className="flex gap-2">
                 <button
@@ -189,7 +228,13 @@ const PhotoUploader = ({ onUploadComplete, onClose }) => {
                   Upload More
                 </button>
                 <button
-                  onClick={onClose}
+                  onClick={() => {
+                    // Refresh parent component before closing
+                    if (onUploadComplete && uploadedFiles.length > 0) {
+                      onUploadComplete(uploadedFiles);
+                    }
+                    onClose();
+                  }}
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
                 >
                   Done
@@ -197,34 +242,52 @@ const PhotoUploader = ({ onUploadComplete, onClose }) => {
               </div>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              {uploadedFiles.map((image, index) => (
-                <motion.div
-                  key={image.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="relative"
-                >
-                  <img
-                    src={image.thumbnail}
-                    alt={image.title}
-                    className="w-full h-24 object-cover rounded-lg border-2 border-green-200"
-                  />
-                  <div className="absolute top-1 right-1">
-                    <FaCheck className="w-4 h-4 text-green-500 bg-white rounded-full p-1" />
-                  </div>
-                  <p className="text-xs text-gray-600 mt-1 truncate">
-                    {image.title}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+            {uploadedFiles.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                {uploadedFiles.map((image, index) => (
+                  <motion.div
+                    key={image.id || index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="relative"
+                  >
+                    <img
+                      src={`${API_BASE_URL}${image.thumbnail || image.url}?t=${Date.now()}`}
+                      alt={image.title || image.filename}
+                      className="w-full h-24 object-cover rounded-lg border-2 border-green-200"
+                      onError={(e) => {
+                        e.target.src = `${API_BASE_URL}${image.url}?t=${Date.now()}` || '/images/placeholder.jpg';
+                      }}
+                    />
+                    <div className="absolute top-1 right-1">
+                      <FaCheck className="w-4 h-4 text-green-500 bg-white rounded-full p-1" />
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1 truncate">
+                      {image.title || image.filename}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            ) : uploadResult && uploadResult.uploaded > 0 ? (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                <p className="text-sm text-blue-700">
+                  {uploadResult.uploaded} file(s) were saved successfully! They will appear in your photo library after you click "Done".
+                </p>
+              </div>
+            ) : null}
             
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
               <p className="text-sm text-green-700">
-                ✅ Photos uploaded successfully and are now available in your image library!
+                {uploadResult?.uploaded > 0 
+                  ? `Successfully saved ${uploadResult.uploaded} file(s)! ${uploadResult.dbRecordsCreated || uploadedFiles.length} have database records.`
+                  : 'Photos uploaded successfully and are now available in your image library!'}
               </p>
+              {uploadResult && uploadResult.uploaded > (uploadResult.dbRecordsCreated || uploadedFiles.length) && (
+                <p className="text-xs text-green-600 mt-2">
+                  Note: Some files were saved but don't have database records yet. Use "Sync Photos" in Album Manager to add them.
+                </p>
+              )}
             </div>
           </div>
         )}

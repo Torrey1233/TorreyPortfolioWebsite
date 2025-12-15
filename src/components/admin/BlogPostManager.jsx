@@ -299,6 +299,14 @@ const BlogPostManager = () => {
     // Refresh the available images list to include newly uploaded photos
     fetchAvailableImages();
     setShowPhotoUploader(false);
+    // Photos are automatically saved to Image table, so they'll appear in Album Manager
+    // If a blog post is selected, you can add these images to it
+    if (selectedBlogPost && uploadedImages.length > 0) {
+      // Auto-add uploaded images to the selected blog post
+      const imageFilenames = uploadedImages.map(img => img.filename);
+      const updatedImages = [...(editBlogPost.images || []), ...imageFilenames];
+      setEditBlogPost({ ...editBlogPost, images: updatedImages });
+    }
   };
 
   const filteredBlogPosts = blogPosts.filter(blogPost =>
@@ -332,14 +340,26 @@ const BlogPostManager = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900">Blog Post Manager</h2>
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-        >
-          <FaPlus className="w-4 h-4" />
-          New Blog Post
-        </button>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Blog Post Manager</h2>
+          <p className="text-gray-600">Create, view, and edit all blog posts with photos</p>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowPhotoUploader(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+          >
+            <FaUpload className="w-4 h-4" />
+            Upload Photos
+          </button>
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            <FaPlus className="w-4 h-4" />
+            New Blog Post
+          </button>
+        </div>
       </div>
 
       {/* Search and Filter */}
@@ -395,8 +415,12 @@ const BlogPostManager = () => {
                   alt={blogPost.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
+                    // Try fallback to uploads directory
+                    e.target.src = `/images/uploads/${blogPost.images[0]}`;
+                    e.target.onerror = () => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    };
                   }}
                 />
               ) : (

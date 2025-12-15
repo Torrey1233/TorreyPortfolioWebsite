@@ -8,6 +8,13 @@ const About = () => {
   
   const experiences = [
     {
+      title: "Test and Debug Engineering",
+      company: "AMD",
+      period: "Incoming summer 2026",
+      location: "Markham, ON",
+      achievements: []
+    },
+    {
       title: "Data Engineer",
       company: "Transport Canada",
       period: "May 2025 – Present",
@@ -24,9 +31,9 @@ const About = () => {
       period: "Oct 2024 – Mar 2025",
       location: "Ottawa, ON",
       achievements: [
-        "Installed and configured 32 Polycom video conferencing systems to enhance team communication",
-        "Managed IT inventory and troubleshooting with Excel and on-site support",
-        "Handled client requests through ASSYST ticketing system with high resolution rates"
+        "Worked closely with the IT team to troubleshoot hardware, install equipment, and utilize Excel to document IT assets across the building and office rooms, ensuring accurate inventory tracking and resource management",
+        "Managed and resolved 200+ client requests through the ASSYST ticketing system, ensuring timely solutions and maintaining high levels of client satisfaction",
+        "Installed and configured 100+ Polycom conferencing systems across the building, enhancing team collaboration, communication capabilities, and enabling seamless online connections for virtual meetings, effectively connecting employees from government offices across Canada"
       ]
     },
     {

@@ -5,26 +5,32 @@ export const photoCategories = {
   street: {
     id: 'street',
     name: 'Street Photography',
-    description: 'Urban scenes and street life',
-    icon: '🏙️'
+    description: 'Urban scenes and street life'
   },
   automotive: {
     id: 'automotive', 
     name: 'Automotive',
-    description: 'Car shows and vehicle photography',
-    icon: '🚗'
+    description: 'Car shows and vehicle photography'
   },
   astro: {
     id: 'astro',
     name: 'Astrophotography', 
-    description: 'Night sky and celestial photography',
-    icon: '🌌'
+    description: 'Night sky and celestial photography'
   },
   concerts: {
     id: 'concerts',
     name: 'Concerts',
-    description: 'Live music and performance photography',
-    icon: '🎵'
+    description: 'Live music and performance photography'
+  },
+  clubs: {
+    id: 'clubs',
+    name: 'Clubs',
+    description: 'Club and nightlife photography'
+  },
+  sports: {
+    id: 'sports',
+    name: 'Sports',
+    description: 'Sports and athletic photography'
   }
 };
 

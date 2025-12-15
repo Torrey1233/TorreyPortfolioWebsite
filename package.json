@@ -16,7 +16,12 @@
     "db:studio": "prisma studio",
     "import:photos": "node import-existing-photos.js",
     "generate:thumbnails": "node generate-thumbnails.js",
-    "update:categories": "node update-categories.js"
+    "update:categories": "node update-categories.js",
+    "export:blogs": "node export-blog-posts.js",
+    "export:blogs:manual": "node manual-export-blogs.js",
+    "build:with-blogs": "npm run export:blogs && npm run build",
+    "build:with-blogs:manual": "npm run export:blogs:manual && npm run build",
+    "build:prod": "node build-for-production.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
@@ -32,7 +37,9 @@
     "framer-motion": "^12.23.6",
     "jsdom": "^26.1.0",
     "lottie-react": "^2.4.1",
+    "mailgun.js": "^12.0.3",
     "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
     "openai": "^5.15.0",
     "pdfjs-dist": "^5.3.93",
     "react": "^19.1.0",

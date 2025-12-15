@@ -35,7 +35,15 @@ const upload = multer({ storage });
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use('/images', express.static('public/images'));
+
+// Serve images with cache-control headers to prevent aggressive caching in development
+app.use('/images', (req, res, next) => {
+  // Set cache-control headers to prevent caching in development/admin
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+}, express.static('public/images'));
 
 // Helper function to generate checksum
 function generateChecksum(filePath) {

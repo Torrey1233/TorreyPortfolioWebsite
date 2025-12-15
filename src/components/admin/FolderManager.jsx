@@ -40,10 +40,10 @@ const FolderManager = () => {
       if (response.ok) {
         setFolders(data.folders);
       } else {
-        setError(data.error);
+        setError(data.error || 'Failed to fetch folders');
       }
     } catch (err) {
-      setError('Failed to fetch folders');
+      setError('Failed to fetch folders. Make sure the API server is running. Run: npm run api or npm run dev:full');
     } finally {
       setLoading(false);
     }
